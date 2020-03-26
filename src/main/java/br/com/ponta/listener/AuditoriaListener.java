@@ -1,6 +1,6 @@
 package br.com.ponta.listener;
 
-import br.com.sebrae.ponta.domain.Auditoria;
+import br.com.ponta.domain.Auditoria;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.PrePersist;

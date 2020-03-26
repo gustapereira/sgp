@@ -1,6 +1,5 @@
 package br.com.ponta.config.security;
 
-import br.com.ponta.domain.Usuario;
 import br.com.ponta.service.UsuarioService;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
@@ -13,19 +12,12 @@ import java.util.Set;
 @Component
 public class AuthenticationService {
 
-    public final static String DIAGNOSTICO_ADMIN = "AGRO_DIAGNOSTICO_ADMIN";
-    public final static String PUSH_ADMIN = "AGRO_ADMIN";
-    public final static String PUSH_GESTOR = "AGRO_GESTOR";
     private static final String CLAIM_CPF = "cpf";
     @Autowired
     private KeycloakConfig keyCloak;
     @Autowired
     private UsuarioService usuarioService;
 
-    public Usuario getUsuarioLogado() {
-        Usuario usuario = usuarioService.recuperaOuCriaUsuarioNaBaseCasoNaoExista(getLogin(), getNome(), getCpf());
-        return usuario;
-    }
 
     private String getLogin() {
         return getKeycloakPrincipal().getToken().getPreferredUsername();

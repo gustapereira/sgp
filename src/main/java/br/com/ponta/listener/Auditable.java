@@ -1,6 +1,6 @@
 package br.com.ponta.listener;
 
-import br.com.sebrae.ponta.domain.Auditoria;
+import br.com.ponta.domain.Auditoria;
 
 public interface Auditable {
  

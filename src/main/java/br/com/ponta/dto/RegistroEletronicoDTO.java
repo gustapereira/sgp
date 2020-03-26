@@ -13,6 +13,6 @@ import java.util.Date;
 public class RegistroEletronicoDTO {
 
     private Long id;
-    private String tip;
+    private String tipo;
     private String nome;
 }
