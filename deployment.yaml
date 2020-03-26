@@ -1,0 +1,112 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sebrae-agro-backend
+  namespace: sebrae-agro
+data:
+  APP_SEGURANCA_ENABLE_HTTPS: true
+
+  KEYCLOAK_AUTH_SERVER_URL: https://amei.sebrae.com.br/auth
+  KEYCLOAK_RESOURCE: sebrae-agro
+  KEYCLOAK_REALM: externo
+  KEYCLOAK_CREDENTIALS_SECRET: b410c33a-dc18-4671-b199-196626dcd550
+
+  SWAGGER_AUTH_TOKEN_URL: https://amei.sebrae.com.br/auth/realms/externo/protocol/openid-connect/token
+  SWAGGER_AUTH_CLIENT_ID: sebrae-agro
+  SWAGGER_AUTH_SECRET: b410c33a-dc18-4671-b199-196626dcd550
+
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+  SPRING_DATASOURCE_PLATFORM: postgres
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sebrae-agro
+  SPRING_DATASOURCE_USERNAME: sebrae-agro
+
+  BATCH_INTERVAL: 0 */10 * ? * *
+  BATCH_REGISTRO_POR_PROCESSAMENTO: 40
+  BATCH_HORAS_PROXIMA_TENTATIVA: 1
+
+  API_KEY_GOOGLE_MAPS: AIzaSyB4KwCqB3mal5DyZjWwOBIdeBwDOjw8hww
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sebrae-agro-backend
+  namespace: sebrae-agro
+data:
+  SPRING_DATASOURCE_PASSWORD: c2VicmFlLWFncm8=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agro-backend
+  namespace: sebrae-agro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: agro-backend
+      tier: backend
+  template:
+    metadata:
+      name: agro-backend
+      labels:
+        name: agro-backend
+        tier: backend
+    spec:
+      containers:
+        - name: agro-backend
+          image: docker-hosted.sebrae.com.br/agro-backend:${TAG}
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: sebrae-agro-backend
+                optional: false
+            - secretRef:
+                name: sebrae-agro-backend
+                optional: false
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /etc/localtime
+              name: tz-config
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /usr/share/zoneinfo/Brazil/East
+            type: ""
+          name: tz-config
+      imagePullSecrets:
+        - name: docker-hosted
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agro-backend
+  namespace: sebrae-agro
+  labels:
+    name: agro-backend
+    tier: backend
+spec:
+  ports:
+    - name: backend
+      port: 8080
+      targetPort: 8080
+  selector:
+    name: agro-backend
+    tier: backend
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: sebrae-agro
+  name: agro-backend
+  annotations:
+    allow.http: "false"
+spec:
+  rules:
+  - host: homolog-api-sebrae-agro.sebrae.com.br
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: agro-backend
+            servicePort: backend

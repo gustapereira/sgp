@@ -1,0 +1,1 @@
+ALTER TABLE sebrae_agro.tbl_noticias ADD COLUMN ds_img_autor BYTEA;

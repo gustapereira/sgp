@@ -1,0 +1,123 @@
+app:
+  origin-permitida: '*'
+  email-contato: contato.utic@sebrae.com.br
+  firebase-configuration-file: firebase/pushnotification-a8096-firebase-adminsdk-iunuv-082284a1ea.json
+  seguranca:
+    enable-https: false
+  swagger:
+    project-groupId: @project.groupId@
+    project-version: @project.version@
+
+logging:
+  file: ${java.io.tmpdir}/application.log
+  root: WARN
+  level:
+    org:
+      springframework:
+        mail: WARN
+    br: WARN
+    com:
+      sun:
+        mail: WARN
+
+flyway:
+  defaultSchema: sebrae_agro
+  schemas: sebrae_agro
+
+spring:
+  application:
+    name: @project.artifactId@
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+# Teste
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          timeout: 5000
+          writetimeout: 5000
+    username: sebraeagroapp@gmail.com
+    password: ozft wdhj ykxz wxiw
+#  mail:
+#    host: relay.na.sebrae.corp
+#    port: 25
+#    properties:
+#      mail:
+#        smtp:
+#          auth: false
+#          starttls:
+#            enable: false
+#    test-connection: false
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+     url: jdbc:h2:mem:testdb
+     driverClassName: org.h2.Driver
+     username: sa
+     password: password
+     xa:
+       data-source-class-name: org.postgresql.MySQLDataSource
+#     url: jdbc:postgresql://10.1.141.166:30596/sebrae-agro
+#     platform: postgres
+    # username: sebrae-agro
+    # driver-class-name: org.postgresql.Driver
+    # xa:
+    #  data-source-class-name: org.postgresql.MySQLDataSource
+#    url: jdbc:postgresql://localhost:5432/agro
+#    platform: postgres
+#    username: postgres
+#    password: root
+#    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    # database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        jdbc:
+           lob:
+              non_contextual_creation: true
+    generate-ddl: false
+    show-sql: false
+
+server:
+  use-forward-headers: true
+  port: 8080
+
+keycloak:
+  enabled: true
+  auth-server-url: https://amei.sebrae.com.br/auth
+#  sebrae-agro
+  resource: sebrae-agro
+  realm: externo
+  credentials:
+    secret:
+  principal-attribute: preferred_username
+  autodetect-bearer-only: true
+  use-resource-role-mappings: true
+  token-minimum-time-to-live: 30
+
+swagger:
+  auth:
+    token-url: ${keycloak.auth-server-url}/realms/${keycloak.realm}/protocol/openid-connect/token
+    client-id: ${keycloak.resource}
+    secret:

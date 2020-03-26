@@ -1,0 +1,83 @@
+app:
+  origin-permitida: '*'
+  email-contato: contato.utic@sebrae.com.br
+  firebase-configuration-file: firebase/pushnotification-a8096-firebase-adminsdk-iunuv-082284a1ea.json
+  seguranca:
+    enable-https: false
+  swagger:
+    project-groupId: @project.groupId@
+    project-version: @project.version@
+
+logging:
+  file: ${java.io.tmpdir}/application.log
+  level:
+    org:
+      springframework:
+        mail: TRACE
+    br: TRACE
+    com:
+      sun:
+        mail: TRACE
+
+spring:
+  application:
+    name: @project.artifactId@
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    platform: h2
+    url: jdbc:h2:file:~/dev/h2/napalma:PUBLIC;MODE=MySQL;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;INIT=CREATE SCHEMA IF NOT EXISTS PUBLIC;
+    username: sa
+    password:
+    xa:
+      data-source-class-name: org.h2.jdbcx.JdbcDataSource
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        default_schema: "PUBLIC"
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+    generate-ddl: false
+    show-sql: true
+  batch:
+    job:
+      enabled: false
+
+server:
+  use-forward-headers: true
+  port: 8080
+
+security:
+  user:
+    password: none
+
+keycloak:
+  enabled: true
+  auth-server-url: https://amei.sebrae.com.br/auth
+  resource: napalma
+  realm: dev
+  credentials:
+    secret: 6ec160df-b2e5-4334-8908-c2d7a428ec43
+  principal-attribute: preferred_username
+  autodetect-bearer-only: true
+  use-resource-role-mappings: true
+  token-minimum-time-to-live: 30
+
+swagger:
+  auth:
+    token-url: ${keycloak.auth-server-url}/realms/${keycloak.realm}/protocol/openid-connect/token
+    client-id: ${keycloak.resource}
+    secret: ${keycloak.credentials.secret}
+
+
+BATCH_INTERVAL: 0 */10 * ? * *
+BATCH_REGISTRO_POR_PROCESSAMENTO: 40
+BATCH_HORAS_PROXIMA_TENTATIVA: 1
+API_KEY_GOOGLE_MAPS: AIzaSyB4KwCqB3mal5DyZjWwOBIdeBwDOjw8hww
