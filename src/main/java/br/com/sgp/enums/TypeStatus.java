@@ -1,4 +1,4 @@
-package br.com.sgp.domain;
+package br.com.sgp.enums;
 
 public enum TypeStatus {
     ATIVA,

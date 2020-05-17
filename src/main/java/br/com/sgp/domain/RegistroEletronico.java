@@ -19,10 +19,10 @@ public class RegistroEletronico extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_TIPO", length = 5, nullable = false)
+    @Column(name = "TX_TIPO")
     private String tipo;
 
-    @Column(name = "TX_NOME", length = 256, nullable = false)
+    @Column(name = "TX_NOME")
     private String nome;
 
 

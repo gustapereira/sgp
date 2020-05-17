@@ -19,14 +19,15 @@ public class Setor extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_NOME", length = 256, nullable = false)
-    private String nome;
-
-    @Column(name = "TX_DESCRICAO", length = 256, nullable = false)
-    private String descricao;
+    @Column(name = "TX_SETOR")
+    private String setor;
 
     @ManyToOne
-    @Column(name = "COD_DEPARTAMENTO")
+    @JoinColumn(name = "COD_FUNCIONARIO")
+    private Funcionario funcionario;
+
+    @ManyToOne
+    @JoinColumn(name = "COD_DEPARTAMENTO")
     private Departamento departamento;
 
 }

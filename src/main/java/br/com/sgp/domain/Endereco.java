@@ -18,23 +18,29 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TX_CNPJ")
-    private String logradouro;
+    @Column(name = "TX_CEP")
+    private String cep;
 
-    @Column(name = "TX_CNPJ")
-    private String numero;
+    @Column(name = "TX_ENDERECO")
+    private String endereco;
 
-    @Column(name = "TX_CNPJ")
-    private String complemento;
-
-    @Column(name = "TX_CNPJ")
+    @Column(name = "TX_BAIRRO")
     private String bairro;
 
-    @Column(name = "TX_CNPJ")
+    @Column(name = "TX_CIDADE")
     private String cidade;
 
-    @Column(name = "TX_CNPJ")
-    private String cep;
+    @Column(name = "TX_NUMERO")
+    private String numero;
+
+    @Column(name = "TX_COMPLEMENTO")
+    private String complemento;
+
+    @Column(name = "TX_EMAIL")
+    private String eMail;
+
+    @Column(name = "TX_CODIGO_MUNICIPIO")
+    private String codigoMunicipio;
 
     @ManyToOne
     @JoinColumn(name = "COD_UF")

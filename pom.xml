@@ -8,12 +8,12 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Sebrae Agro - Backend</name>
-	<description>API de exposição de endpoints do projeto Sebrae Agro.</description>
+	<name>SGP - Backend</name>
+	<description>API de exposição de endpoints do projeto Sistema de Gerenciamento de Pessoal.</description>
 
 	<organization>
-		<name>SEBRAE NACIONAL</name>
-		<url>http://www.sebrae.com.br</url>
+		<name>sgp</name>
+		<url>http://www.sgp.com.br</url>
 	</organization>
 
 	<properties>

@@ -19,13 +19,14 @@ public class Secao extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_NOME", length = 256, nullable = false)
-    private String nome;
-
-    @Column(name = "TX_DESCRICAO", length = 256, nullable = false)
-    private String descricao;
+    @Column(name = "TX_SECAO")
+    private String secao;
 
     @ManyToOne
-    @Column(name = "COD_SETOR")
+    @JoinColumn(name = "COD_FUNCIONARIO")
+    private Funcionario funcionario;
+
+    @ManyToOne
+    @JoinColumn(name = "COD_SETOR")
     private Setor setor;
 }

@@ -1,9 +1,11 @@
 package br.com.sgp.domain;
 
+import br.com.sgp.enums.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,6 +20,9 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "FT_LOGO_MARCA")
+    private String logoMarca;
+
     @Column(name = "TX_CNPJ")
     private String cnpj;
 
@@ -30,13 +35,53 @@ public class Empresa {
     @Column(name = "TX_CNAE")
     private String CNAE;
 
+    @Column(name = "TX_ATIVIDADE_PRINCIPAL")
+    private String atividadePrincipal;
+
+    @Column(name = "TYPE_IRRF")
+    private TypeIRRF typeIRRF;
+
+    @Column(name = "TYPE_VINCULO")
+    private TypeVinculo typeVinculo;
+
+    @Column(name = "TYPE_DOCUMENTO")
+    private TypeDocumento typeDocumento;
+
+    @Column(name = "TX_NUMERO_DOCUMENTO")
+    private String numeroDocumento;
+
+    @Column(name = "TYPE_EMPRESA")
+    private TypeEmpresa typeEmpresa;
+
     @ManyToOne
     @JoinColumn(name = "COD_ENDERECO")
     private Endereco endereco;
 
     @ManyToOne
+    @JoinColumn(name = "COD_TELEFONE")
+    private Telefone telefone;
+
+    @ManyToOne
     @JoinColumn(name = "COD_USUARIO")
     private Usuario responsavel;
+
+    @Column(name = "TX_CODIGO_ENCERRAMENTO_EMPRESA")
+    private String codigoEncerramentoEmpresa;
+
+    @Column(name = "DT_INICIO_ATIVIDADE")
+    private Date dtInicioAtividade;
+
+    @Column(name = "DT_FINAL_ATIVIDADE")
+    private Date dtFinalAtividade;
+
+    @Column(name = "TX_BR_PDH")
+    private String brPDH;
+
+    @Column(name = "TX_DIRECAO_GERAL")
+    private String direcaoGeral;
+
+    @Column(name = "TX_CEO")
+    private String CEO;
 
     @Column(name = "TYPE_STATUS")
     @Enumerated(EnumType.STRING)

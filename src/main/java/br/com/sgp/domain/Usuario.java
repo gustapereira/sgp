@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,34 +19,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TX_CNPJ")
+    @Column(name = "TX_NOME")
     private String Nome;
 
-    @Column(name = "TX_CNPJ")
-    private String dtNascimento;
-
-    @Column(name = "TX_CNPJ")
-    private String admissao;
-
-    @Column(name = "TX_CNPJ")
-    private String ctps;
-
-    @Column(name = "TX_CNPJ")
-    private String serieCTPS;
-
-    @Column(name = "TX_CNPJ")
-    private String pis;
-
-    @Column(name = "TX_CNPJ")
-    private String sexo;
+    @ManyToOne
+    @JoinColumn(name = "COD_PERMISSOES_ACESSO")
+    private PermissoesAcesso permissoesAcessoList;
 
     @ManyToOne
-    @Column(name = "COD_CARGO")
-    private Cargo cargo;
-
-    @ManyToOne
-    @Column(name = "COD_SECAO")
-    private Secao secao;
+    @JoinColumn(name = "COD_FUNCIONARIO")
+    private Funcionario funcionario;
 
 
 

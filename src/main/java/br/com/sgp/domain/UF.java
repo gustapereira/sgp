@@ -22,10 +22,10 @@ public class UF extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_NOME", length = 40, nullable = false)
+    @Column(name = "TX_NOME")
     private String nome;
 
-    @Column(name = "TX_SIGLA", length = 2, nullable = false)
+    @Column(name = "TX_SIGLA")
     private String sigla;
 
 }

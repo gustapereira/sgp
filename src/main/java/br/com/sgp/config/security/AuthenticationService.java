@@ -1,6 +1,5 @@
 package br.com.sgp.config.security;
 
-import br.com.sgp.service.UsuarioService;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ public class AuthenticationService {
     private static final String CLAIM_CPF = "cpf";
     @Autowired
     private KeycloakConfig keyCloak;
-    @Autowired
-    private UsuarioService usuarioService;
-
 
     private String getLogin() {
         return getKeycloakPrincipal().getToken().getPreferredUsername();

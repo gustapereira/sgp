@@ -1,8 +1,8 @@
 ## Índice
 
-**Projeto Agro - Backend - Spring Boot**  
+**Projeto SGP - Backend - Spring Boot**  
 **Versão 1.0.0**  
-# Agro Backend - Spring Boot
+# SGP Backend - Spring Boot
 
 **Sumário**
 

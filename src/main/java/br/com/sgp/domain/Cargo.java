@@ -22,10 +22,10 @@ public class Cargo extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_NOME", length = 256, nullable = false)
+    @Column(name = "TX_NOME")
     private String nome;
 
-    @Column(name = "TX_DESCRICAO", length = 256, nullable = false)
+    @Column(name = "TX_DESCRICAO")
     private String descricao;
 
 }

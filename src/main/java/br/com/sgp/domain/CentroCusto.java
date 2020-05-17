@@ -3,10 +3,7 @@ package br.com.sgp.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -22,10 +19,11 @@ public class CentroCusto extends BaseEntity<Long> {
     @Column(name = COD_ID)
     private Long id;
 
-    @Column(name = "TX_NOME", length = 256, nullable = false)
-    private String nome;
-
-    @Column(name = "TX_DESCRICAO", length = 256, nullable = false)
+    @Column(name = "TX_DESCRICAO")
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "COD_FUNCIONARIO")
+    private Funcionario funcionario;
 
 }
