@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,10 +21,6 @@ public class FolhaDePonto extends BaseEntity<Long> {
     @Id
     @Column(name = COD_ID)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "COD_USUARIO")
-    private Usuario usuario;
 
     @Column(name = "DT_ENTRADA")
     private Date entrada;
@@ -44,4 +42,11 @@ public class FolhaDePonto extends BaseEntity<Long> {
 
     @Column(name = "TX_JUSTIFICATIVA")
     private String justificativa;
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "TBL_FUNCIONARIO_FOLHA_PONTO",
+            joinColumns = @JoinColumn(name = "COD_FOLHA_PONTO"),
+            inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
+    )
+    private List<Funcionario> funcionario = new ArrayList<>();
 }

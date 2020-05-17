@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,9 +24,12 @@ public class Secao extends BaseEntity<Long> {
     @Column(name = "TX_SECAO")
     private String secao;
 
-    @ManyToOne
-    @JoinColumn(name = "COD_FUNCIONARIO")
-    private Funcionario funcionario;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "TBL_FUNCIONARIO_SECAO",
+            joinColumns = @JoinColumn(name = "COD_SECAO"),
+            inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
+    )
+    private List<Funcionario> funcionario = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "COD_SETOR")

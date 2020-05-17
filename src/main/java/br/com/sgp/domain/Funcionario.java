@@ -41,7 +41,8 @@ public class Funcionario {
     @Column(name = "TX_NATURALIDADE")
     private String naturalidade;
 
-    @Column(name = "UF_NASCIMENTO")
+    @ManyToOne
+    @JoinColumn(name = "COD_UF_NASCIMENTO")
     private String ufNascimento;;
 
     @ManyToOne
@@ -120,22 +121,6 @@ public class Funcionario {
     private CBO cbo;
 
     @ManyToOne
-    @JoinColumn(name = "COD_DIRETORIA")
-    private Diretoria diretoria;
-
-    @ManyToOne
-    @JoinColumn(name = "COD_DEPARTAMENTO")
-    private Departamento departamento;
-
-    @ManyToOne
-    @JoinColumn(name = "COD_SETOR")
-    private Setor setor;
-
-    @ManyToOne
-    @JoinColumn(name = "COD_SECAO")
-    private Secao secao;
-
-    @ManyToOne
     @JoinColumn(name = "COD_CENTRO_CUSTO")
     private CentroCusto centroCusto;
 
@@ -162,7 +147,8 @@ public class Funcionario {
     @Column(name = "TX_RG_ORGAO")
     private String rgOrgao;
 
-    @Column(name = "UF_RG")
+    @ManyToOne
+    @JoinColumn(name = "COD_UF_RG")
     private String ufRG;;
 
     @Column(name = "TX_NUM_INSS")
@@ -186,7 +172,7 @@ public class Funcionario {
     @Column(name = "DT_CTPS")
     private Date dtCTPS;
 
-    @Column(name = "UF_CTPS")
+    @Column(name = "COD_UF_CTPS")
     private String ufCTPS;;
 
     @Column(name = "TX_CNH")
@@ -216,7 +202,8 @@ public class Funcionario {
     @Column(name = "TX_CIDADE_RIC")
     private String cidadeRIC;
 
-    @Column(name = "UF_RIC")
+    @ManyToOne
+    @JoinColumn(name = "COD_UF_RIC")
     private String ufRIC;;
 
     @Column(name = "TX_NUM_TITULO_ELEITOR")
@@ -231,7 +218,8 @@ public class Funcionario {
     @Column(name = "DT_TITULO_ELEITOR")
     private Date dtTituloEleitor;
 
-    @Column(name = "UF_TITULO_ELEITOR")
+    @ManyToOne
+    @JoinColumn(name = "COD_UF_TITULO_ELEITOR")
     private String ufTituloEleitor;;
 
     @Column(name = "TX_NUM_RESERVISTA")
@@ -266,11 +254,11 @@ public class Funcionario {
     @Column(name = "TX_EMAIL")
     private String eMail;
 
-    @Column(name = "TX_DIAS_EXPERIENCIA")
-    private String diasExperiencia;
+    @Column(name = "LG_DIAS_EXPERIENCIA")
+    private Long diasExperiencia;
 
-    @Column(name = "TX_DIAS_PORROGACAO")
-    private String diasPorrogacao;
+    @Column(name = "LG_DIAS_PORROGACAO")
+    private Long diasPorrogacao;
 
     @ManyToOne
     @JoinColumn(name = "COD_HORARIO")
