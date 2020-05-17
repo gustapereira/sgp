@@ -40,7 +40,7 @@ public class SwaggerConfig {
     public Docket greetingApi() {
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
-            .apis(RequestHandlerSelectors.basePackage("br.com.sebrae.agro"))
+            .apis(RequestHandlerSelectors.basePackage("br.com.sgp"))
             .build()
             .apiInfo(apiInfo());
     }
@@ -50,7 +50,7 @@ public class SwaggerConfig {
             .version(projectVersion)
             .title(nomeProjeto)
             .description(projectGroupId)
-            .contact(new Contact("SEBRAE", "http://sebrae.com.br", emailContato))
+            .contact(new Contact("SGP", "http://sgp.com.br", emailContato))
             .build();
     }
 

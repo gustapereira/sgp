@@ -62,6 +62,7 @@ public class Funcionario {
     private String nomePai;
 
     @Column(name = "TYPE_SEXO")
+    @Enumerated(EnumType.STRING)
     private TypeSexo typeSexo;
 
     @Column(name = "DT_PROXIMO_EXAME")
@@ -79,9 +80,11 @@ public class Funcionario {
     private Afastamento afastamento;
 
     @Column(name = "TYPE_ESTADO_CIVIL")
+    @Enumerated(EnumType.STRING)
     private TypeEstadoCivil typeEstadoCivil;
 
     @Column(name = "TYPE_RACA")
+    @Enumerated(EnumType.STRING)
     private TypeRaca typeRaca;
 
     @ManyToOne
@@ -92,6 +95,7 @@ public class Funcionario {
     private Boolean isDeficiente;
 
     @Column(name = "TYPE_DEFICIENCIA")
+    @Enumerated(EnumType.STRING)
     private TypeDeficiencia typeDeficiencia;
 
     @Column(name = "DB_SALARIO")
@@ -102,6 +106,7 @@ public class Funcionario {
     private Cargo cargo;
 
     @Column(name = "TYPE_SALARIO")
+    @Enumerated(EnumType.STRING)
     private TypeSalario typeSalario;
 
     @Column(name = "LG_HORAS_BASE")
@@ -246,6 +251,7 @@ public class Funcionario {
 
     //OUTRAS INFORMACOES
     @Column(name = "TYPE_CAT_TRABALHADOR")
+    @Enumerated(EnumType.STRING)
     private TypeCatTrabalhador typeCatTrabalhador;
 
     @Column(name = "TX_APOSENTADO")

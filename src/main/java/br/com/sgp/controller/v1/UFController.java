@@ -1,6 +1,7 @@
 package br.com.sgp.controller.v1;
 
 import br.com.sgp.dto.UFDTO;
+import br.com.sgp.mapper.UFMapper;
 import br.com.sgp.service.UFService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,19 +13,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/uf")
-@Api("Endpoint de UF")
+@Api("Endpoint para recuperar lista de UFs.")
 public class UFController {
 
     @Autowired
     private UFService ufService;
 
+    @Autowired
+    private UFMapper ufMapper;
+
     @GetMapping
-    @ApiOperation("Lista todos os UFes")
+    @ApiOperation("Endpoint para recuperar todas uf.")
     public ResponseEntity<List<UFDTO>> listar() {
-        return ResponseEntity.ok(ufService.findAll());
+        return ResponseEntity.ok(ufMapper.toDto(ufService.listar()));
     }
-
-
-
-
 }
+

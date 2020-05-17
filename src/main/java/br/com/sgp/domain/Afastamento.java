@@ -25,6 +25,7 @@ public class Afastamento extends BaseEntity<Long> {
     private Date dtAfastamento;
 
     @Column(name = "TYPE_AFASTAMENTO")
+    @Enumerated(EnumType.STRING)
     private TypeAfastamento typeAfastamento;
 
 }

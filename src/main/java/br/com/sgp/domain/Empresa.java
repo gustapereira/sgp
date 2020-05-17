@@ -39,18 +39,22 @@ public class Empresa {
     private String atividadePrincipal;
 
     @Column(name = "TYPE_IRRF")
+    @Enumerated(EnumType.STRING)
     private TypeIRRF typeIRRF;
 
     @Column(name = "TYPE_VINCULO")
+    @Enumerated(EnumType.STRING)
     private TypeVinculo typeVinculo;
 
     @Column(name = "TYPE_DOCUMENTO")
+    @Enumerated(EnumType.STRING)
     private TypeDocumento typeDocumento;
 
     @Column(name = "TX_NUMERO_DOCUMENTO")
     private String numeroDocumento;
 
     @Column(name = "TYPE_EMPRESA")
+    @Enumerated(EnumType.STRING)
     private TypeEmpresa typeEmpresa;
 
     @ManyToOne

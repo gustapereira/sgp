@@ -36,6 +36,7 @@ public class HierarquiaExterna extends BaseEntity<Long> {
     private Funcionario funcionario;
 
     @Column(name = "TYPE_SUBORDINACAO")
+    @Enumerated(EnumType.STRING)
     private TypeSubordinacao typeSubordinacao;
 
     @ManyToOne
