@@ -45,11 +45,6 @@ public class FuncionarioDTO {
     private Long horasBase;
     private Date data;
     private CBO cbo;
-    private Diretoria diretoria;
-    private Departamento departamento;
-    private Setor setor;
-    private Secao secao;
-    private CentroCusto centroCusto;
     private String grupoAvalDesempenho;
     private String grupoProfissiografico;
     private String grupoAvalExperiencia;

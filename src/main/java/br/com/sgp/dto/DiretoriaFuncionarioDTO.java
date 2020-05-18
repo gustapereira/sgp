@@ -1,20 +1,19 @@
 package br.com.sgp.dto;
 
-import br.com.sgp.domain.Diretoria;
 import br.com.sgp.domain.Empresa;
 import br.com.sgp.domain.Funcionario;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import java.util.List;
 
 
 @Getter
 @Setter
-public class DiretoriaDTO {
+public class DiretoriaFuncionarioDTO {
 
     private Long id;
     private String diretoria;
+    private List<Funcionario> funcionarios;
     private Empresa empresa;
 }

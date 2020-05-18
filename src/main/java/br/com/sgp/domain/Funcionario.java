@@ -120,10 +120,6 @@ public class Funcionario {
     @JoinColumn(name = "COD_CBO")
     private CBO cbo;
 
-    @ManyToOne
-    @JoinColumn(name = "COD_CENTRO_CUSTO")
-    private CentroCusto centroCusto;
-
     @Column(name = "TX_GRUPO_AVAL_DESEMPENHO")
     private String grupoAvalDesempenho;
 

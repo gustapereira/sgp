@@ -5,15 +5,15 @@ import br.com.sgp.domain.Funcionario;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import java.util.List;
 
 
 @Getter
 @Setter
-public class SetorDTO {
+public class SetorFuncionarioDTO {
 
     private Long id;
     private String setor;
+    private List<Funcionario> funcionarios;
     private Departamento departamento;
 }
