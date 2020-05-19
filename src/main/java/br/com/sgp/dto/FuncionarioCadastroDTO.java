@@ -5,22 +5,18 @@ import br.com.sgp.enums.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
-import java.util.List;
 
 
 @Getter
 @Setter
-public class FuncionarioDTO {
+public class FuncionarioCadastroDTO {
 
     private Long id;
+    private Long idEmpresa;
     private String avatar;
     private String cracha;
     private String nome;
-    private Empresa empresa;
     private String nomeCompleto;
     private String naturalidade;
     private UF ufNascimento;;

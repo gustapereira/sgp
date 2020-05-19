@@ -1,13 +1,13 @@
 package br.com.sgp.controller.v1;
 
-import br.com.sgp.domain.Empresa;
-import br.com.sgp.dto.EmpresaDTO;
+import br.com.sgp.dto.FuncionarioCadastroDTO;
+import br.com.sgp.dto.FuncionarioDTO;
 import br.com.sgp.exception.OperacaoException;
-import br.com.sgp.mapper.EmpresaMapper;
-import br.com.sgp.service.EmpresaService;
+import br.com.sgp.mapper.FuncionarioMapper;
+import br.com.sgp.service.FuncionarioService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,42 +16,43 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/empresa")
-@Api(value = "empresa", description = "Operaçôes sobre empresa", tags = "Empresa")
-public class EmpresaController {
+@RequestMapping("/funcionarios")
+@Api(value = "funcionario", description = "Operaçôes sobre funcionario", tags = "Funcionários")
+@RequiredArgsConstructor
+public class FuncionarioController {
 
-    @Autowired
-    private EmpresaService empresaService;
-
-    @Autowired
-    private EmpresaMapper empresaMapper;
+    private final FuncionarioService service;
+    private final FuncionarioMapper mapper;
 
     @PostMapping
-    public ResponseEntity<EmpresaDTO> save(@Validated @RequestBody final EmpresaDTO empresaDTO) throws OperacaoException {
-        Empresa empresa = empresaMapper.toEntity(empresaDTO);
-        empresa = empresaService.salvar(empresa);
-        return ResponseEntity.ok(empresaMapper.toDto(empresa));
+    @ApiOperation("Salva um novo Funcionário")
+    public ResponseEntity<FuncionarioDTO> save(@Validated @RequestBody final FuncionarioCadastroDTO dto) throws OperacaoException {
+        return ResponseEntity.ok(mapper.toDto(service.salvar(dto)));
     }
 
     @GetMapping
-    public ResponseEntity<List<EmpresaDTO>> list() {
-        List<Empresa> list = empresaService.findAll();
-        return ResponseEntity.ok(empresaMapper.toDto(list));
+    @ApiOperation("Lista todos os Funcionários")
+    public ResponseEntity<List<FuncionarioDTO>> list() {
+        return ResponseEntity.ok(mapper.toDto(service.listarTodos()));
     }
 
-    @DeleteMapping("/deletar/{id}")
-    @ApiOperation("Endpoint para excluir um empresa.")
-    public ResponseEntity deleterCard(@PathVariable("id") Long id) throws OperacaoException {
-        empresaService.deletar(id);
+    @DeleteMapping("/{id}")
+    @ApiOperation("Endpoint para excluir um funcionario.")
+    public ResponseEntity deletar(@PathVariable("id") Long id) throws OperacaoException {
+        service.deletarPeloId(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    @ApiOperation("Editar empresas")
-    public ResponseEntity editarCard(@Validated @RequestBody final EmpresaDTO empresaDTO) throws OperacaoException {
-        return ResponseEntity.ok(empresaMapper.toDto(empresaService.atualizar(empresaMapper.toEntity(empresaDTO))));
+    @GetMapping("/{id}")
+    @ApiOperation("Endpoint para excluir um funcionario.")
+    public ResponseEntity<FuncionarioDTO> buscarPeloId(@PathVariable("id") Long id) throws OperacaoException {
+        return ResponseEntity.ok(mapper.toDto(service.buscarPeloId(id)));
     }
 
-
+    @PutMapping
+    @ApiOperation("Editar funcionarios")
+    public ResponseEntity<FuncionarioDTO> editar(@Validated @RequestBody final FuncionarioDTO dto) throws OperacaoException {
+        return ResponseEntity.ok(mapper.toDto(service.editar(dto)));
+    }
 
 }

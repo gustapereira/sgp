@@ -1,127 +1,129 @@
 package br.com.sgp.service;
 
 import br.com.sgp.domain.Empresa;
-import br.com.sgp.domain.Endereco;
-import br.com.sgp.domain.Telefone;
-import br.com.sgp.domain.Usuario;
-import br.com.sgp.enums.*;
-import br.com.sgp.exception.CampoObrigatorioException;
-import br.com.sgp.exception.NaoEncontradoException;
-import br.com.sgp.exception.OperacaoException;
-import br.com.sgp.repository.EmpresaRepository;
-import br.com.sgp.util.MensagemConstant;
-import org.springframework.context.MessageSource;
+import br.com.sgp.domain.Funcionario;
+import br.com.sgp.dto.FuncionarioCadastroDTO;
+import br.com.sgp.dto.FuncionarioDTO;
+import br.com.sgp.exception.ObjectNotFoundException;
+import br.com.sgp.mapper.FuncionarioCadastroMapper;
+import br.com.sgp.mapper.FuncionarioMapper;
+import br.com.sgp.repository.FuncionarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class FuncionarioService {
 
-    private final EmpresaRepository empresaRepository;
-    private final MessageSource messageSource;
+    private final FuncionarioRepository repository;
+    private final FuncionarioMapper mapper;
+    private final FuncionarioCadastroMapper cadastroMapper;
+    private final EmpresaService empresaService;
 
-    public FuncionarioService(EmpresaRepository empresaRepository, MessageSource messageSource) {
-        this.empresaRepository = empresaRepository;
-        this.messageSource = messageSource;
+    public List<Funcionario> listarTodos() {
+        return repository.findAll();
     }
 
-    protected String getMessage(String key, String... values) {
-        return messageSource.getMessage(key, values, Locale.getDefault());
+    public Funcionario buscarPeloId(Long id) {
+        return repository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Funcionário não localizado pelo id: " + id)
+        );
     }
 
-    public Empresa salvar(final Empresa empresa) {
-        return empresaRepository.save(empresa);
+    public Funcionario salvar(FuncionarioCadastroDTO dto) {
+        Funcionario funcionario = cadastroMapper.toEntity(dto);
+        funcionario.setEmpresa(empresaService.buscarPeloId(dto.getIdEmpresa()));
+        return repository.save(funcionario);
     }
 
-
-    public List<Empresa> findAll() {
-        return empresaRepository.findAll();
+    public void deletarPeloId(Long id) {
+        buscarPeloId(id);
+        deletarPeloId(id);
     }
 
-
-    @Transactional
-    public Empresa atualizar(Empresa empresa) throws OperacaoException {
-        if (empresa.getId() == null) {
-            throw new CampoObrigatorioException(getMessage(MensagemConstant.EXCEPTION_CAMPO_OBRIGATORIO, MensagemConstant.RESOURCE_CARD));
-        }
-
-        Optional<Empresa> optionalEmpresa = empresaRepository.findById(empresa.getId());
-        if (!optionalEmpresa.isPresent()) {
-            throw new NaoEncontradoException(getMessage(MensagemConstant.EXCEPTION_NAO_ENCONTRADO, MensagemConstant.RESOURCE_CARD));
-        }
-
-        empresa = atualizaCard(empresa, optionalEmpresa.get());
-        return empresaRepository.save(empresa);
+    public Funcionario editar(FuncionarioDTO dto) {
+        return repository.save(atualizarDadosDoFuncionario(buscarPeloId(dto.getId()), dto));
     }
 
-
-    public Empresa atualizaCard(Empresa empresa, Empresa saved) {
-
-        String atividadePrincipal = empresa.getAtividadePrincipal() != null ? empresa.getAtividadePrincipal() : saved.getAtividadePrincipal();
-        String brPDH = empresa.getBrPDH() != null ? empresa.getBrPDH() : saved.getBrPDH();
-        String ceo = empresa.getCEO() != null ? empresa.getCEO() : saved.getCEO();
-        String cnae = empresa.getCNAE() != null ? empresa.getCNAE() : saved.getCNAE();
-        String cnpj = empresa.getCnpj() != null ? empresa.getCnpj() : saved.getCnpj();
-        String codigoEncerramento = empresa.getCodigoEncerramentoEmpresa() != null ? empresa.getCodigoEncerramentoEmpresa() : saved.getCodigoEncerramentoEmpresa();
-        String direcaoGeral = empresa.getDirecaoGeral() != null ? empresa.getDirecaoGeral() : saved.getDirecaoGeral();
-        String logoMarca = empresa.getLogoMarca() != null ? empresa.getLogoMarca() : saved.getLogoMarca();
-        String nomeFantasia = empresa.getNomeFantasia() != null ? empresa.getNomeFantasia() : saved.getNomeFantasia();
-        String numeroDocumento = empresa.getNumeroDocumento() != null ? empresa.getNumeroDocumento() : saved.getNumeroDocumento();
-        String razaoSocial = empresa.getRazaoSocial() != null ? empresa.getRazaoSocial() : saved.getRazaoSocial();
-        Date dtFinalAtividade = empresa.getDtFinalAtividade() != null ? empresa.getDtFinalAtividade() : saved.getDtFinalAtividade();
-        Date dtInicioAtividade = empresa.getDtInicioAtividade() != null ? empresa.getDtInicioAtividade() : saved.getDtInicioAtividade();
-        Endereco end = empresa.getEndereco() != null ? empresa.getEndereco() : saved.getEndereco();
-        Usuario usuario = empresa.getResponsavel() != null ? empresa.getResponsavel() : saved.getResponsavel();
-        Telefone telefone = empresa.getTelefone() != null ? empresa.getTelefone() : saved.getTelefone();
-        TypeDocumento typeDocumento = empresa.getTypeDocumento() != null ? empresa.getTypeDocumento() : saved.getTypeDocumento();
-        TypeEmpresa typeEmpresa = empresa.getTypeEmpresa() != null ? empresa.getTypeEmpresa() : saved.getTypeEmpresa();
-        TypeIRRF typeIRRF = empresa.getTypeIRRF() != null ? empresa.getTypeIRRF() : saved.getTypeIRRF();
-        TypeVinculo typeVinculo = empresa.getTypeVinculo() != null ? empresa.getTypeVinculo() : saved.getTypeVinculo();
-        TypeStatus typeStatus = empresa.getTypeStatus() != null ? empresa.getTypeStatus() : saved.getTypeStatus();
-
-
-        empresa.setAtividadePrincipal(atividadePrincipal);
-        empresa.setBrPDH(brPDH);
-        empresa.setCEO(ceo);
-        empresa.setCnpj(cnpj);
-        empresa.setCNAE(cnae);
-        empresa.setCodigoEncerramentoEmpresa(codigoEncerramento);
-        empresa.setDirecaoGeral(direcaoGeral);
-        empresa.setDtFinalAtividade(dtFinalAtividade);
-        empresa.setDtInicioAtividade(dtInicioAtividade);
-        empresa.setEndereco(end);
-        empresa.setLogoMarca(logoMarca);
-        empresa.setNomeFantasia(nomeFantasia);
-        empresa.setRazaoSocial(razaoSocial);
-        empresa.setResponsavel(usuario);
-        empresa.setTelefone(telefone);
-        empresa.setTypeDocumento(typeDocumento);
-        empresa.setTypeEmpresa(typeEmpresa);
-        empresa.setTypeIRRF(typeIRRF);
-        empresa.setTypeStatus(typeStatus);
-        empresa.setTypeVinculo(typeVinculo);
-        empresa.setTypeVinculo(typeVinculo);
-
-
-        return empresa;
+    private Funcionario atualizarDadosDoFuncionario(Funcionario funcionario, FuncionarioDTO dto) {
+        funcionario.setAdmissao(dto.getAdmissao() != null ? dto.getAdmissao() : funcionario.getAdmissao());
+        funcionario.setAfastamento(dto.getAfastamento() != null ? dto.getAfastamento() : funcionario.getAfastamento());
+        funcionario.setAposentado(dto.getAposentado() != null ? dto.getAposentado() : funcionario.getAposentado());
+        funcionario.setAposEspecial(dto.getAposEspecial() != null ? dto.getAposEspecial() : funcionario.getAposEspecial());
+        funcionario.setArea(dto.getArea() != null ? dto.getArea() : funcionario.getArea());
+        funcionario.setAposentado(dto.getBeneficiarios() != null ? dto.getBeneficiarios() : funcionario.getBeneficiarios());
+        funcionario.setCargo(dto.getCargo() != null ? dto.getCargo() : funcionario.getCargo());
+        funcionario.setCategoria(dto.getCategoria() != null ? dto.getCategoria() : funcionario.getCategoria());
+        funcionario.setCbo(dto.getCbo() != null ? dto.getCbo() : funcionario.getCbo());
+        funcionario.setCidadeRIC(dto.getCidadeRIC() != null ? dto.getCidadeRIC() : funcionario.getCidadeRIC());
+        funcionario.setClasseINSS(dto.getClasseINSS() != null ? dto.getClasseINSS() : funcionario.getClasseINSS());
+        funcionario.setCNH(dto.getCNH() != null ? dto.getCNH() : funcionario.getCNH());
+        funcionario.setCPF(dto.getCPF() != null ? dto.getCPF() : funcionario.getCPF());
+        funcionario.setCracha(dto.getCracha() != null ? dto.getCracha() : funcionario.getCracha());
+        funcionario.setCsmReservista(dto.getCsmReservista() != null ? dto.getCsmReservista() : funcionario.getCsmReservista());
+        funcionario.setData(dto.getData() != null ? dto.getData() : funcionario.getData());
+        funcionario.setDiasExperiencia(dto.getDiasExperiencia() != null ? dto.getDiasExperiencia() : funcionario.getDiasExperiencia());
+        funcionario.setDiasPorrogacao(dto.getDiasPorrogacao() != null ? dto.getDiasPorrogacao() : funcionario.getDiasPorrogacao());
+        funcionario.setDtCTPS(dto.getDtCTPS() != null ? dto.getDtCTPS() : funcionario.getDtCTPS());
+        funcionario.setDtEmissaoCNH(dto.getDtEmissaoCNH() != null ? dto.getDtEmissaoCNH() : funcionario.getDtValidadeCNH());
+        funcionario.setDtEmissaoPIS(dto.getDtEmissaoPIS() != null ? dto.getDtEmissaoPIS() : funcionario.getDtEmissaoPIS());
+        funcionario.setDtEmissaoRIC(dto.getDtEmissaoRIC() != null ? dto.getDtEmissaoRIC() : funcionario.getDtEmissaoRIC());
+        funcionario.setDtNascimento(dto.getDtNascimento() != null ? dto.getDtNascimento() : funcionario.getDtNascimento());
+        funcionario.setDtReservista(dto.getDtReservista() != null ? dto.getDtReservista() : funcionario.getDtReservista());
+        funcionario.setDtRGExpedicao(dto.getDtRGExpedicao() != null ? dto.getDtRGExpedicao() : funcionario.getDtRGExpedicao());
+        funcionario.setDtTituloEleitor(dto.getDtTituloEleitor() != null ? dto.getDtTituloEleitor() : funcionario.getDtTituloEleitor());
+        funcionario.setIsDeficiente(dto.getIsDeficiente() != null ? dto.getIsDeficiente() : funcionario.getIsDeficiente());
+        funcionario.setTypeDeficiencia(dto.getTypeDeficiencia() != null ? dto.getTypeDeficiencia() : funcionario.getTypeDeficiencia());
+        funcionario.setFerias(dto.getFerias() != null ? dto.getFerias() : funcionario.getFerias());
+        funcionario.setEnderecoFuncionario(dto.getEnderecoFuncionario() != null ? dto.getEnderecoFuncionario() : funcionario.getEnderecoFuncionario());
+        funcionario.setEMail(dto.getEMail() != null ? dto.getEMail() : funcionario.getEMail());
+        funcionario.setEmpresa(dto.getEmpresa() != null ? dto.getEmpresa() : funcionario.getEmpresa());
+        funcionario.setEscolaridade(dto.getEscolaridade() != null ? dto.getEscolaridade() : funcionario.getEscolaridade());
+        funcionario.setTelefone(dto.getTelefone() != null ? dto.getTelefone() : funcionario.getTelefone());
+        funcionario.setHorario(dto.getHorario() != null ? dto.getHorario() : funcionario.getHorario());
+        funcionario.setHorasBase(dto.getHorasBase() != null ? dto.getHorasBase() : funcionario.getHorasBase());
+        funcionario.setGrupoAvalDesempenho(dto.getGrupoAvalDesempenho() != null ? dto.getGrupoAvalDesempenho() : funcionario.getGrupoAvalDesempenho());
+        funcionario.setGrupoAvalExperiencia(dto.getGrupoAvalExperiencia() != null ? dto.getGrupoAvalExperiencia() : funcionario.getGrupoAvalExperiencia());
+        funcionario.setGrupoProfissiografico(dto.getGrupoProfissiografico() != null ? dto.getGrupoProfissiografico() : funcionario.getGrupoProfissiografico());
+        funcionario.setNacionalidade(dto.getNacionalidade() != null ? dto.getNacionalidade() : funcionario.getNacionalidade());
+        funcionario.setNaturalidade(dto.getNaturalidade() != null ? dto.getNaturalidade() : funcionario.getNaturalidade());
+        funcionario.setNome(dto.getNome() != null ? dto.getNome() : funcionario.getNome());
+        funcionario.setNomeCompleto(dto.getNomeCompleto() != null ? dto.getNomeCompleto() : funcionario.getNomeCompleto());
+        funcionario.setNomeMae(dto.getNomeMae() != null ? dto.getNomeMae() : funcionario.getNomeMae());
+        funcionario.setNomePai(dto.getNomePai() != null ? dto.getNomePai() : funcionario.getNomePai());
+        funcionario.setNumINSS(dto.getNumINSS() != null ? dto.getNumINSS() : funcionario.getNumPIS());
+        funcionario.setNumReservista(dto.getNumReservista() != null ? dto.getNumReservista() : funcionario.getNumReservista());
+        funcionario.setNumRIC(dto.getNumRIC() != null ? dto.getNumRIC() : funcionario.getNumRIC());
+        funcionario.setNumPIS(dto.getNumPIS() != null ? dto.getNumPIS() : funcionario.getNumPIS());
+        funcionario.setNumTituloEleitor(dto.getNumTituloEleitor() != null ? dto.getNumTituloEleitor() : funcionario.getNumTituloEleitor());
+        funcionario.setNumSecaoTituloEleitor(dto.getNumSecaoTituloEleitor() != null ? dto.getNumSecaoTituloEleitor() : funcionario.getNumSecaoTituloEleitor());
+        funcionario.setNumZonaTituloEleitor(dto.getNumZonaTituloEleitor() != null ? dto.getNumZonaTituloEleitor() : funcionario.getNumZonaTituloEleitor());
+        funcionario.setObservacoesPPP(dto.getObservacoesPPP() != null ? dto.getObservacoesPPP() : funcionario.getObservacoesPPP());
+        funcionario.setOrgaoRIC(dto.getOrgaoRIC() != null ? dto.getOrgaoRIC() : funcionario.getOrgaoRIC());
+        funcionario.setRgOrgao(dto.getRgOrgao() != null ? dto.getRgOrgao() : funcionario.getRgOrgao());
+        funcionario.setProximoExame(dto.getProximoExame() != null ? dto.getProximoExame() : funcionario.getProximoExame());
+        funcionario.setRaReservista(dto.getRaReservista() != null ? dto.getRaReservista() : funcionario.getRaReservista());
+        funcionario.setRevezamento(dto.getRevezamento() != null ? dto.getRevezamento() : funcionario.getRevezamento());
+        funcionario.setSalario(dto.getSalario() != null ? dto.getSalario() : funcionario.getSalario());
+        funcionario.setSerieCTPS(dto.getSerieCTPS() != null ? dto.getSerieCTPS() : funcionario.getCTPS());
+        funcionario.setSerieReservista(dto.getSerieReservista() != null ? dto.getSerieReservista() : funcionario.getSerieReservista());
+        funcionario.setTypeCatTrabalhador(dto.getTypeCatTrabalhador() != null ? dto.getTypeCatTrabalhador() : funcionario.getTypeCatTrabalhador());
+        funcionario.setTypeEstadoCivil(dto.getTypeEstadoCivil() != null ? dto.getTypeEstadoCivil() : funcionario.getTypeEstadoCivil());
+        funcionario.setTypeRaca(dto.getTypeRaca() != null ? dto.getTypeRaca() : funcionario.getTypeRaca());
+        funcionario.setTypeSalario(dto.getTypeSalario() != null ? dto.getTypeSalario() : funcionario.getTypeSalario());
+        funcionario.setTypeSexo(dto.getTypeSexo() != null ? dto.getTypeSexo() : funcionario.getTypeSexo());
+        funcionario.setUfCTPS(dto.getUfCTPS() != null ? dto.getUfCTPS() : funcionario.getUfCTPS());
+        funcionario.setUfNascimento(dto.getUfNascimento() != null ? dto.getUfNascimento() : funcionario.getUfNascimento());
+        funcionario.setUfRG(dto.getUfRG() != null ? dto.getUfRG() : funcionario.getUfRG());
+        funcionario.setUfRIC(dto.getUfRIC() != null ? dto.getUfRIC() : funcionario.getUfRIC());
+        funcionario.setUfTituloEleitor(dto.getUfTituloEleitor() != null ? dto.getUfTituloEleitor() : funcionario.getUfTituloEleitor());
+        funcionario.setDtValidadeCNH(dto.getDtValidadeCNH() != null ? dto.getDtValidadeCNH() : funcionario.getDtValidadeCNH());
+        funcionario.setDtValidadeRIC(dto.getDtValidadeRIC() != null ? dto.getDtValidadeRIC() : funcionario.getDtValidadeRIC());
+        return funcionario;
     }
 
-
-    public void deletar(Long id) throws OperacaoException {
-        if (id == null) {
-            throw new CampoObrigatorioException(getMessage(MensagemConstant.EXCEPTION_CAMPO_OBRIGATORIO, MensagemConstant.RESOURCE_CARD));
-        }
-        Optional<Empresa> optionalCard = empresaRepository.findById(id);
-        if (!optionalCard.isPresent()) {
-            throw new NaoEncontradoException(getMessage(MensagemConstant.EXCEPTION_NAO_ENCONTRADO, MensagemConstant.RESOURCE_CARD));
-        }
-        empresaRepository.delete(optionalCard.get());
-    }
 
 }

@@ -167,7 +167,9 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 "/centroCusto",
                 "/centroCusto/**",
                 "/endereco",
-                "/endereco/**"
+                "/endereco/**",
+                "/funcionarios",
+                "/funcionarios/**"
             ).permitAll()
             .anyRequest().authenticated().and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

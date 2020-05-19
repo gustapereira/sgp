@@ -4,6 +4,7 @@ import br.com.sgp.domain.*;
 import br.com.sgp.enums.*;
 import br.com.sgp.exception.CampoObrigatorioException;
 import br.com.sgp.exception.NaoEncontradoException;
+import br.com.sgp.exception.ObjectNotFoundException;
 import br.com.sgp.exception.OperacaoException;
 import br.com.sgp.repository.EmpresaRepository;
 import br.com.sgp.util.MensagemConstant;
@@ -119,6 +120,12 @@ public class EmpresaService {
             throw new NaoEncontradoException(getMessage(MensagemConstant.EXCEPTION_NAO_ENCONTRADO, MensagemConstant.RESOURCE_CARD));
         }
         empresaRepository.delete(optionalCard.get());
+    }
+
+    public Empresa buscarPeloId(Long id) {
+        return empresaRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Empresa não localizada pelo id: " + id)
+        );
     }
 
 }
