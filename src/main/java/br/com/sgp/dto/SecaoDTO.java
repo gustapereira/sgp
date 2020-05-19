@@ -15,6 +15,5 @@ public class SecaoDTO {
 
     private Long id;
     private String secao;
-    private Funcionario funcionario;
     private Setor setor;
 }

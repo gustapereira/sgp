@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/uf")
-@Api("Endpoint para recuperar lista de UFs.")
+@Api(value = "uf", description = "Operaçôes sobre UF", tags = "UF")
 public class UFController {
 
     @Autowired

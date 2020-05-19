@@ -24,7 +24,7 @@ public class FuncionarioDTO {
     private String nomeCompleto;
     private String naturalidade;
     private UF ufNascimento;;
-    private Endereco endereco;
+    private Endereco enderecoFuncionario;
     private Telefone telefone;
     private Date dtNascimento;
     private String nomeMae;

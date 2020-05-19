@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "TBL_FUNCIONARIOS")
 public class Funcionario {
 
-    public static final String cod_id = "COD_FUNCIONARIOS";
+    public static final String cod_id = "COD_FUNCIONARIO";
 
     @Id
     @Column(name = cod_id)
@@ -43,11 +43,11 @@ public class Funcionario {
 
     @ManyToOne
     @JoinColumn(name = "COD_UF_NASCIMENTO")
-    private String ufNascimento;;
+    private UF ufNascimento;;
 
     @ManyToOne
     @JoinColumn(name = "COD_ENDERECO")
-    private Endereco endereco;
+    private Endereco enderecoFuncionario;
 
     @ManyToOne
     @JoinColumn(name = "COD_TELEFONE")
@@ -145,7 +145,7 @@ public class Funcionario {
 
     @ManyToOne
     @JoinColumn(name = "COD_UF_RG")
-    private String ufRG;;
+    private UF ufRG;;
 
     @Column(name = "TX_NUM_INSS")
     private String numINSS;
@@ -168,8 +168,9 @@ public class Funcionario {
     @Column(name = "DT_CTPS")
     private Date dtCTPS;
 
-    @Column(name = "COD_UF_CTPS")
-    private String ufCTPS;;
+    @ManyToOne
+    @JoinColumn(name = "COD_UF_CTPS")
+    private UF ufCTPS;;
 
     @Column(name = "TX_CNH")
     private String CNH;
@@ -200,7 +201,7 @@ public class Funcionario {
 
     @ManyToOne
     @JoinColumn(name = "COD_UF_RIC")
-    private String ufRIC;;
+    private UF ufRIC;;
 
     @Column(name = "TX_NUM_TITULO_ELEITOR")
     private String numTituloEleitor;
@@ -216,7 +217,7 @@ public class Funcionario {
 
     @ManyToOne
     @JoinColumn(name = "COD_UF_TITULO_ELEITOR")
-    private String ufTituloEleitor;;
+    private UF ufTituloEleitor;;
 
     @Column(name = "TX_NUM_RESERVISTA")
     private String numReservista;

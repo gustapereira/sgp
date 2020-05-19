@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,9 +33,12 @@ public class HierarquiaExterna extends BaseEntity<Long> {
     @Column(name = "TX_NOME")
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "COD_FUNCIONARIO")
-    private Funcionario funcionario;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "TBL_FUNCIONARIO_HIERARQUIA_EXTERNA",
+            joinColumns = @JoinColumn(name = "COD_HIERARQUIA_EXTERNA"),
+            inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
+    )
+    private List<Funcionario> funcionarios = new ArrayList<>();
 
     @Column(name = "TYPE_SUBORDINACAO")
     @Enumerated(EnumType.STRING)

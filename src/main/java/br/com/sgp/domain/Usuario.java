@@ -27,15 +27,12 @@ public class Usuario {
     @JoinColumn(name = "COD_PERMISSOES_ACESSO")
     private PermissoesAcesso permissoesAcessoList;
 
-
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinTable(name = "TBL_FUNCIONARIO_USUARIO",
             joinColumns = @JoinColumn(name = "COD_USUARIO"),
-            inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO"),
-            schema = "sebrae_agro"
+            inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
     )
     private Funcionario funcionario = new Funcionario();
-
 
 
 }

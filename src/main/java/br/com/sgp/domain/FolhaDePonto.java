@@ -45,8 +45,8 @@ public class FolhaDePonto extends BaseEntity<Long> {
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "TBL_FUNCIONARIO_FOLHA_PONTO",
-            joinColumns = @JoinColumn(name = "COD_FOLHA_PONTO"),
+            joinColumns = @JoinColumn(name = "COD_FOLHA_DE_PONTO"),
             inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
     )
-    private List<Funcionario> funcionario = new ArrayList<>();
+    private List<Funcionario> funcionarios = new ArrayList<>();
 }

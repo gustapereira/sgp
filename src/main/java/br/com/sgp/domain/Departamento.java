@@ -29,7 +29,7 @@ public class Departamento extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "COD_DEPARTAMENTO"),
             inverseJoinColumns = @JoinColumn(name = "COD_FUNCIONARIO")
     )
-    private List<Funcionario> funcionario = new ArrayList<>();
+    private List<Funcionario> funcionarios = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "COD_DIRETORIA")

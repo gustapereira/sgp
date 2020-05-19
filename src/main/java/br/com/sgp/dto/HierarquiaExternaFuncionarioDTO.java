@@ -6,19 +6,18 @@ import br.com.sgp.enums.TypeSubordinacao;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import java.util.Date;
+import java.util.List;
 
 
 @Getter
 @Setter
-public class HierarquiaExternaDTO {
+public class HierarquiaExternaFuncionarioDTO {
 
     private Long id;
     private Boolean isPessoa;
     private Boolean isEmpresa;
     private String nome;
+    private List<Funcionario> funcionarios;
     private TypeSubordinacao typeSubordinacao;
     private Empresa empresa;
 }
