@@ -30,39 +30,39 @@ public class DiretoriaController {
     private final FuncionarioMapper funcionarioMapper;
 
     @PostMapping
-    @ApiOperation("Salva um novo Diretoria")
+    @ApiOperation("Salva uma nova Diretoria")
     public ResponseEntity<DiretoriaDTO> save(@Validated @RequestBody final DiretoriaCadastroDTO dto) throws OperacaoException {
         return ResponseEntity.ok(diretoriaMapper.toDto(diretoriaService.salvar(dto)));
     }
 
     @GetMapping
-    @ApiOperation("Lista todos os Diretorias")
+    @ApiOperation("Lista todos as Diretorias")
     public ResponseEntity<List<DiretoriaDTO>> list() {
         List<Diretoria> list = diretoriaService.listarTodos();
         return ResponseEntity.ok(diretoriaMapper.toDto(list));
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("Busca um diretoria pelo id")
+    @ApiOperation("Busca uma diretoria pelo id")
     public ResponseEntity<DiretoriaDTO> buscarPeloId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(diretoriaMapper.toDto(diretoriaService.buscarPeloId(id)));
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation("Exclui um diretoria pelo id.")
+    @ApiOperation("Exclui uma diretoria pelo id.")
     public ResponseEntity deleterCard(@PathVariable("id") Long id) throws OperacaoException {
         diretoriaService.deletar(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    @ApiOperation("Editar diretorias")
+    @ApiOperation("Edita a  diretoria")
     public ResponseEntity<DiretoriaDTO> editar(@Validated @RequestBody final DiretoriaDTO diretoriaDTO) throws OperacaoException {
         return ResponseEntity.ok(diretoriaMapper.toDto(diretoriaService.editar(diretoriaDTO)));
     }
 
     @PostMapping("/{idDiretoria}/add-funcionarios")
-    @ApiOperation("Adiciona funcionários através do id da empresa, e de uma lista de funcionários passada no corpo da requisição.")
+    @ApiOperation("Adiciona funcionários através do id da diretoria, e de uma lista de funcionários passada no corpo da requisição.")
     public ResponseEntity<DiretoriaDTO> adicionarFuncionarios(@PathVariable("idDiretoria") Long idDiretoria, @RequestBody List<FuncionarioDTO> funcionarios) {
         return ResponseEntity.ok(
                 diretoriaMapper.toDto(diretoriaService.adicionarFuncionarios(idDiretoria, funcionarioMapper.toEntity(funcionarios)))
@@ -70,7 +70,7 @@ public class DiretoriaController {
     }
 
     @PostMapping("/{idDiretoria}/remover-funcionarios")
-    @ApiOperation("Remove funcionários através do id da empresa, e de uma lista de funcionários passada no corpo da requisição.")
+    @ApiOperation("Remove funcionários através do id da diretoria, e de uma lista de funcionários passada no corpo da requisição.")
     public ResponseEntity<DiretoriaDTO> removerFuncionarios(@PathVariable("idDiretoria") Long idDiretoria, @RequestBody List<FuncionarioDTO> funcionarios) {
         return ResponseEntity.ok(
                 diretoriaMapper.toDto(diretoriaService.removerFuncionarios(idDiretoria, funcionarioMapper.toEntity(funcionarios)))

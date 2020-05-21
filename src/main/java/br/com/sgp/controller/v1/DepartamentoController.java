@@ -62,7 +62,7 @@ public class DepartamentoController {
     }
 
     @PostMapping("/{idDepartamento}/add-funcionarios")
-    @ApiOperation("Adiciona funcionários através do id da empresa, e de uma lista de funcionários passada no corpo da requisição.")
+    @ApiOperation("Adiciona funcionários através do id do departamento, e de uma lista de funcionários passada no corpo da requisição.")
     public ResponseEntity<DepartamentoDTO> adicionarFuncionarios(@PathVariable("idDepartamento") Long idDepartamento, @RequestBody List<FuncionarioDTO> funcionarios) {
         return ResponseEntity.ok(
                 departamentoMapper.toDto(departamentoService.adicionarFuncionarios(idDepartamento, funcionarioMapper.toEntity(funcionarios)))
@@ -70,7 +70,7 @@ public class DepartamentoController {
     }
 
     @PostMapping("/{idDepartamento}/remover-funcionarios")
-    @ApiOperation("Remove funcionários através do id da empresa, e de uma lista de funcionários passada no corpo da requisição.")
+    @ApiOperation("Remove funcionários através do id do departamento, e de uma lista de funcionários passada no corpo da requisição.")
     public ResponseEntity<DepartamentoDTO> removerFuncionarios(@PathVariable("idDepartamento") Long idDepartamento, @RequestBody List<FuncionarioDTO> funcionarios) {
         return ResponseEntity.ok(
                 departamentoMapper.toDto(departamentoService.removerFuncionarios(idDepartamento, funcionarioMapper.toEntity(funcionarios)))
