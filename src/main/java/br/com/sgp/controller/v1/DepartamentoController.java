@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/departamentos")
 @Api(value = "Departamentos", description = "Operaçôes sobre Departamentos", tags = "Departamentos")
