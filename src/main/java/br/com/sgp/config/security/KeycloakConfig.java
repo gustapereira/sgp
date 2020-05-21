@@ -169,7 +169,11 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                 "/endereco",
                 "/endereco/**",
                 "/funcionarios",
-                "/funcionarios/**"
+                "/funcionarios/**",
+                "/departamentos/",
+                "/departamentos/**",
+                "/diretorias/",
+                "/diretorias/**"
             ).permitAll()
             .anyRequest().authenticated().and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

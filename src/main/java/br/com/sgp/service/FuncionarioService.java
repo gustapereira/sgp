@@ -1,12 +1,10 @@
 package br.com.sgp.service;
 
-import br.com.sgp.domain.Empresa;
 import br.com.sgp.domain.Funcionario;
 import br.com.sgp.dto.FuncionarioCadastroDTO;
 import br.com.sgp.dto.FuncionarioDTO;
 import br.com.sgp.exception.ObjectNotFoundException;
 import br.com.sgp.mapper.FuncionarioCadastroMapper;
-import br.com.sgp.mapper.FuncionarioMapper;
 import br.com.sgp.repository.FuncionarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,9 +17,9 @@ import java.util.List;
 public class FuncionarioService {
 
     private final FuncionarioRepository repository;
-    private final FuncionarioMapper mapper;
     private final FuncionarioCadastroMapper cadastroMapper;
     private final EmpresaService empresaService;
+    private final AfastamentoService afastamentoService;
 
     public List<Funcionario> listarTodos() {
         return repository.findAll();
@@ -36,6 +34,7 @@ public class FuncionarioService {
     public Funcionario salvar(FuncionarioCadastroDTO dto) {
         Funcionario funcionario = cadastroMapper.toEntity(dto);
         funcionario.setEmpresa(empresaService.buscarPeloId(dto.getIdEmpresa()));
+        funcionario.setAfastamento(afastamentoService.buscarPeloId(dto.getIdAfastamento()));
         return repository.save(funcionario);
     }
 

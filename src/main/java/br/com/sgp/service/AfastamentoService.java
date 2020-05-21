@@ -1,10 +1,12 @@
 package br.com.sgp.service;
 
 import br.com.sgp.domain.Afastamento;
+import br.com.sgp.domain.Funcionario;
 import br.com.sgp.enums.TypeAfastamento;
 import br.com.sgp.enums.TypeStatus;
 import br.com.sgp.exception.CampoObrigatorioException;
 import br.com.sgp.exception.NaoEncontradoException;
+import br.com.sgp.exception.ObjectNotFoundException;
 import br.com.sgp.exception.OperacaoException;
 import br.com.sgp.repository.AfastamentoRepository;
 import br.com.sgp.util.MensagemConstant;
@@ -80,6 +82,12 @@ public class AfastamentoService {
             throw new NaoEncontradoException(getMessage(MensagemConstant.EXCEPTION_NAO_ENCONTRADO, MensagemConstant.RESOURCE_CARD));
         }
         afastamentoRepository.delete(optionalCard.get());
+    }
+
+    public Afastamento buscarPeloId(Long id) {
+        return afastamentoRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Funcionário não localizado pelo id: " + id)
+        );
     }
 
 }

@@ -14,6 +14,7 @@ public class FuncionarioCadastroDTO {
 
     private Long id;
     private Long idEmpresa;
+    private Long idAfastamento;
     private String avatar;
     private String cracha;
     private String nome;
@@ -29,7 +30,6 @@ public class FuncionarioCadastroDTO {
     private Date proximoExame;
     private Date admissao;
     private Ferias ferias;
-    private Afastamento afastamento;
     private TypeEstadoCivil typeEstadoCivil;
     private TypeRaca typeRaca;
     private Nacionalidade nacionalidade;
