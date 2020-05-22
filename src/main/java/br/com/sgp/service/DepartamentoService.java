@@ -6,6 +6,7 @@ import br.com.sgp.dto.DepartamentoCadastroDTO;
 import br.com.sgp.dto.DepartamentoDTO;
 import br.com.sgp.exception.ObjectNotFoundException;
 import br.com.sgp.mapper.DepartamentoCadastroMapper;
+import br.com.sgp.mapper.DiretoriaMapper;
 import br.com.sgp.repository.DepartamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class DepartamentoService {
     private final DepartamentoRepository repository;
     private final DepartamentoCadastroMapper cadastroMapper;
     private final DiretoriaService diretoriaService;
+    private final DiretoriaMapper diretoriaMapper;
 
 
     public List<Departamento> listarTodos() {
@@ -66,7 +68,8 @@ public class DepartamentoService {
     }
 
     private Departamento atualizarDadosDoDepartamento(Departamento departamento, DepartamentoDTO dto) {
-
+        departamento.setDiretoria(dto.getDiretoria()!=null?diretoriaMapper.toEntity(dto.getDiretoria()):departamento.getDiretoria());
+        departamento.setDepartamento(dto.getDepartamento()!=null?dto.getDepartamento():departamento.getDepartamento());
         return departamento;
     }
 

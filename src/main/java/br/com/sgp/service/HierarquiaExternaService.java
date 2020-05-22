@@ -1,7 +1,7 @@
 package br.com.sgp.service;
 
-import br.com.sgp.domain.HierarquiaExterna;
 import br.com.sgp.domain.Funcionario;
+import br.com.sgp.domain.HierarquiaExterna;
 import br.com.sgp.dto.HierarquiaExternaCadastroDTO;
 import br.com.sgp.dto.HierarquiaExternaDTO;
 import br.com.sgp.exception.ObjectNotFoundException;
@@ -66,7 +66,15 @@ public class HierarquiaExternaService {
     }
 
     private HierarquiaExterna atualizarDadosDoHierarquiaExterna(HierarquiaExterna hierarquiaExterna, HierarquiaExternaDTO dto) {
-
+        hierarquiaExterna.setEmpresa(dto.getEmpresa() != null ? dto.getEmpresa() : hierarquiaExterna.getEmpresa());
+        hierarquiaExterna.setIsEmpresa(
+                dto.getIsEmpresa().equals(hierarquiaExterna.getIsEmpresa() ? dto.getIsEmpresa() : hierarquiaExterna.getIsEmpresa())
+        );
+        hierarquiaExterna.setIsPessoa(
+                dto.getIsPessoa().equals(hierarquiaExterna.getIsPessoa() ? dto.getIsEmpresa() : hierarquiaExterna.getIsPessoa())
+        );
+        hierarquiaExterna.setNome(dto.getNome() != null ? dto.getNome() : hierarquiaExterna.getNome());
+        hierarquiaExterna.setTypeSubordinacao(dto.getTypeSubordinacao() != null ? dto.getTypeSubordinacao() : hierarquiaExterna.getTypeSubordinacao());
         return hierarquiaExterna;
     }
 

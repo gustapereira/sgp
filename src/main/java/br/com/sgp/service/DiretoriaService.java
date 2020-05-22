@@ -66,7 +66,8 @@ public class DiretoriaService {
     }
 
     private Diretoria atualizarDadosDoDiretoria(Diretoria diretoria, DiretoriaDTO dto) {
-
+        diretoria.setEmpresa(dto.getEmpresa()!=null? dto.getEmpresa(): diretoria.getEmpresa());
+        diretoria.setDiretoria(dto.getDiretoria()!=null? dto.getDiretoria(): diretoria.getDiretoria());
         return diretoria;
     }
 
