@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hierarquias")
-@Api(value = "Hierarquias", description = "Operaçôes sobre Hierarquias", tags = "Hierarquias")
+@Api(value = "Hierarquias", description = "Operaçôes sobre Hierarquias Externas", tags = "Hierarquias")
 @RequiredArgsConstructor
 public class HierarquiaExternaController {
 
