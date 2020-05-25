@@ -1,7 +1,10 @@
 package br.com.sgp.enums;
 
 public enum TypeRaca {
-    FIXO,
-    CELULAR,
-    FAXL;
+    Indigena,
+    Branca,
+    Negra,
+    Amarela,
+    Parda,
+    NãoInformado;
 }

@@ -1,7 +1,9 @@
 package br.com.sgp.enums;
 
 public enum TypeEmpresa {
-    FIXO,
-    CELULAR,
-    FAXL;
+    Normal,
+    Microempresa,
+    Autônomo,
+    Pública,
+    PequenoPorte;
 }

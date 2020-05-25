@@ -1,7 +1,10 @@
 package br.com.sgp.enums;
 
 public enum TypeDeficiencia {
-    FIXO,
-    CELULAR,
-    FAXL;
+    Física,
+    Auditiva,
+    Visual,
+    Mental,
+    Múltipla,
+    Reabilitado;
 }
