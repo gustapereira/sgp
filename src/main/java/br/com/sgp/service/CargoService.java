@@ -3,6 +3,7 @@ package br.com.sgp.service;
 import br.com.sgp.domain.Cargo;
 import br.com.sgp.exception.CampoObrigatorioException;
 import br.com.sgp.exception.NaoEncontradoException;
+import br.com.sgp.exception.ObjectNotFoundException;
 import br.com.sgp.exception.OperacaoException;
 import br.com.sgp.repository.CargoRepository;
 import br.com.sgp.util.MensagemConstant;
@@ -77,6 +78,12 @@ public class CargoService {
             throw new NaoEncontradoException(getMessage(MensagemConstant.EXCEPTION_NAO_ENCONTRADO, MensagemConstant.RESOURCE_CARD));
         }
         cargoRepository.delete(optionalCard.get());
+    }
+
+    public Cargo buscarPeloId(Long id) {
+        return cargoRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Salário não localizado pelo id: " + id)
+        );
     }
 
 }
