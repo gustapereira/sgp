@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cargo-x-fatores")
+@RequestMapping("/cargo-fatores")
 @Api(value = "Cargo X Fatores", description = "Operaçôes sobre Cargo X Fatores", tags = "Cargo X Fatores")
 @RequiredArgsConstructor
 public class CargoXFatorController {

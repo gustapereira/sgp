@@ -50,25 +50,23 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
      * The Keycloak Admin client that provides the service-account Access-Token
      *
      * @param props
-     *
      * @return
      */
     @Bean
     public Keycloak keycloak(KeycloakSpringBootProperties props) {
         return KeycloakBuilder.builder() //
-            .serverUrl(props.getAuthServerUrl()) //
-            .realm(props.getRealm()) //
-            .grantType(OAuth2Constants.CLIENT_CREDENTIALS) //
-            .clientId(props.getResource()) //
-            .clientSecret((String) props.getCredentials().get("secret")) //
-            .build();
+                .serverUrl(props.getAuthServerUrl()) //
+                .realm(props.getRealm()) //
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS) //
+                .clientId(props.getResource()) //
+                .clientSecret((String) props.getCredentials().get("secret")) //
+                .build();
     }
 
     /**
      * Use {@link KeycloakAuthenticationProvider}
      *
      * @param auth
-     *
      * @throws Exception
      */
     @Autowired
@@ -98,7 +96,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(
-            new SessionRegistryImpl());
+                new SessionRegistryImpl());
     }
 
     /**
@@ -138,46 +136,60 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.anonymous().and()
-            .authorizeRequests()
-            .antMatchers("/",
-                "/h2/*",
-                "/lib/*",
-                "/css/*",
-                "/fonts/*",
-                "/images/*",
-                "/o2c.html",
-                "index.html",
-                "/webjars/**",
-                "/api-docs/*",
-                "/v1/api-docs",
-                "/v2/api-docs",
-                "/swagger-ui.js",
-                "/swagger-ui.html",
-                "/swagger-ui.min.js",
-                "/swagger-resources/**",
-                "/hystrix/**",
-                "/uf",
-                "/uf/**",
-                "/afastamento",
-                "/afastamento/**",
-                "/cargo",
-                "/cargo/**",
-                "/cbo",
-                "/cbo/**",
-                "/centroCusto",
-                "/centroCusto/**",
-                "/endereco",
-                "/endereco/**",
-                "/funcionarios",
-                "/funcionarios/**",
-                "/departamentos/",
-                "/departamentos/**",
-                "/diretorias/",
-                "/diretorias/**"
-            ).permitAll()
-            .anyRequest().authenticated().and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .csrf().disable()
-            .headers().frameOptions().disable();
+                .authorizeRequests()
+                .antMatchers("/",
+                        "/h2/*",
+                        "/lib/*",
+                        "/css/*",
+                        "/fonts/*",
+                        "/images/*",
+                        "/o2c.html",
+                        "index.html",
+                        "/webjars/**",
+                        "/api-docs/*",
+                        "/v1/api-docs",
+                        "/v2/api-docs",
+                        "/swagger-ui.js",
+                        "/swagger-ui.html",
+                        "/swagger-ui.min.js",
+                        "/swagger-resources/**",
+                        "/hystrix/**",
+                        "/v1/",
+                        "/v1/**",
+                        "/uf",
+                        "/uf/**",
+                        "/afastamento",
+                        "/afastamento/**",
+                        "/cargo",
+                        "/cargo/**",
+                        "/cbo",
+                        "/cbo/**",
+                        "/centroCusto",
+                        "/centroCusto/**",
+                        "/endereco",
+                        "/endereco/**",
+                        "/funcionarios",
+                        "/funcionarios/**",
+                        "/departamentos/",
+                        "/departamentos/**",
+                        "/diretorias/",
+                        "/diretorias/**",
+                        "/cargo-fatores",
+                        "/cargo-fatores/**",
+                        "/fatores/",
+                        "/fatores/**",
+                        "/faixa-fatores/",
+                        "/faixa-fatores/**",
+                        "/grupos-salariais/",
+                        "/grupos-salariais/**",
+                        "/salarios/",
+                        "/salarios/**",
+                        "/quadro-funcionarios/",
+                        "/quadro-funcionarios/**"
+                ).permitAll()
+                .anyRequest().authenticated().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .csrf().disable()
+                .headers().frameOptions().disable();
     }
 }
